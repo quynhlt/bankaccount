@@ -31,7 +31,7 @@ public class BankAccountTest {
 	@Test
 	public void testValueOfAccountIsNumberValue() {
 		try {
-			Account account = createAccount("abc");
+			Account account = createAccount("123456789A");
 			assertEquals(0, BankAccount.openAccount(account));
 			fail();
 		} catch (RuntimeException e) {

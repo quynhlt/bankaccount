@@ -17,7 +17,7 @@ public class BankAccount {
 
 	public static void main(String[] args) {
 		Account account = new Account();
-		account.setAccountNumber("");
+		account.setAccountNumber("s");
 		account.setBalance(0);
 		account.setOpenTimestampt("06/06/2013");
 		openAccount(account);
@@ -30,10 +30,21 @@ public class BankAccount {
 		} else {
 			if (account.getAccountNumber().length() != 10) {
 				balance = ACC_NUMBER_INVALID_LENGTH;
-			} else if (Long.parseLong(account.getAccountNumber()) > 0) {
+			} else if (!isNumberValue(account.getAccountNumber())) {
 				throw new RuntimeException(ERROR_MESSAGE);
+			} else {
+
 			}
 		}
 		return balance;
+	}
+
+	private static boolean isNumberValue(String accountNumber) {
+		try {
+			Long.parseLong(accountNumber);
+			return true;
+		} catch (RuntimeException exception) {
+			return false;
+		}
 	}
 }
