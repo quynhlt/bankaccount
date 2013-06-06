@@ -4,6 +4,7 @@
 package test.java.bank;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import main.java.bank.BankAccount;
 import main.java.bank.entity.Account;
 
@@ -20,10 +21,22 @@ public class BankAccountTest {
 		Account account = createAccount("");
 		assertEquals(-1, BankAccount.openAccount(account));
 	}
+
 	@Test
 	public void testLengthOfAccountNumberIs10() {
 		Account account = createAccount("123456789");
 		assertEquals(-2, BankAccount.openAccount(account));
+	}
+
+	@Test
+	public void testValueOfAccountIsNumberValue() {
+		try {
+			Account account = createAccount("abc");
+			assertEquals(0, BankAccount.openAccount(account));
+			fail();
+		} catch (RuntimeException e) {
+			assertEquals(BankAccount.ERROR_MESSAGE, e.getMessage());
+		}
 	}
 
 	private Account createAccount(String accountNumber) {

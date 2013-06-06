@@ -11,6 +11,10 @@ import main.java.bank.entity.Account;
  */
 public class BankAccount {
 
+	public static final int ACC_NUMBER_EMPTY = -1;
+	public static final int ACC_NUMBER_INVALID_LENGTH = -2;
+	public static final String ERROR_MESSAGE = "Account number is number value";
+
 	public static void main(String[] args) {
 		Account account = new Account();
 		account.setAccountNumber("");
@@ -22,10 +26,10 @@ public class BankAccount {
 	public static int openAccount(Account account) {
 		int balance = 0;
 		if (account.getAccountNumber().isEmpty()) {
-			balance = -1;
+			balance = ACC_NUMBER_EMPTY;
 		} else {
 			if (account.getAccountNumber().length() != 10) {
-				balance = -2;
+				balance = ACC_NUMBER_INVALID_LENGTH;
 			}
 		}
 		return balance;
