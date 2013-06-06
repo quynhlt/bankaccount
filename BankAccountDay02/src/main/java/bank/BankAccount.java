@@ -30,6 +30,8 @@ public class BankAccount {
 		} else {
 			if (account.getAccountNumber().length() != 10) {
 				balance = ACC_NUMBER_INVALID_LENGTH;
+			} else if (Long.parseLong(account.getAccountNumber()) > 0) {
+				throw new RuntimeException(ERROR_MESSAGE);
 			}
 		}
 		return balance;
