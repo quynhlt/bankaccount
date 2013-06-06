@@ -20,6 +20,11 @@ public class BankAccountTest {
 		Account account = createAccount("");
 		assertEquals(-1, BankAccount.openAccount(account));
 	}
+	@Test
+	public void testLengthOfAccountNumberIs10() {
+		Account account = createAccount("1234567890");
+		assertEquals(-2, BankAccount.openAccount(account));
+	}
 
 	private Account createAccount(String accountNumber) {
 		Account account = new Account();
