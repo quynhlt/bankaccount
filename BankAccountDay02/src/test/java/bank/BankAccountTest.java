@@ -22,7 +22,7 @@ public class BankAccountTest {
 	}
 	@Test
 	public void testLengthOfAccountNumberIs10() {
-		Account account = createAccount("1234567890");
+		Account account = createAccount("123456789");
 		assertEquals(-2, BankAccount.openAccount(account));
 	}
 

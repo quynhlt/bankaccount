@@ -23,6 +23,10 @@ public class BankAccount {
 		int balance = 0;
 		if (account.getAccountNumber().isEmpty()) {
 			balance = -1;
+		} else {
+			if (account.getAccountNumber().length() != 10) {
+				balance = -2;
+			}
 		}
 		return balance;
 	}
