@@ -39,6 +39,11 @@ public class BankAccountTest {
 		}
 	}
 
+	@Test
+	public void testLengthOpenAccountWithBalanceIs0() {
+		Account account = createAccount("1234567890");
+		assertEquals(0, BankAccount.openAccount(account));
+	}
 	private Account createAccount(String accountNumber) {
 		Account account = new Account();
 		account.setAccountNumber(accountNumber);
