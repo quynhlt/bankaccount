@@ -51,7 +51,8 @@ public class BankAccount {
 	}
 
 	public static Account deposit(float amount, Account account) {
-		return null;
+		account.setBalance(account.getBalance() + amount);
+		return bankAccountDAO.save(account);
 	}
 
 }

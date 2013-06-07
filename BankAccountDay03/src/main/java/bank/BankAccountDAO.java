@@ -7,7 +7,7 @@ import main.java.bank.entity.Account;
 
 /**
  * @author quynhlt
- * 
+ *
  */
 public class BankAccountDAO {
 
