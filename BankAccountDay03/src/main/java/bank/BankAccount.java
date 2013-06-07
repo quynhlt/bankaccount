@@ -50,4 +50,8 @@ public class BankAccount {
 		BankAccount.bankAccountDAO = mockDAO;
 	}
 
+	public static Account deposit(float amount, Account account) {
+		return null;
+	}
+
 }

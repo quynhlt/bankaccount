@@ -3,11 +3,6 @@
  */
 package test.java.bank;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
 import main.java.bank.BankAccount;
 import main.java.bank.BankAccountDAO;
 import main.java.bank.entity.Account;
@@ -15,6 +10,11 @@ import main.java.bank.entity.Account;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+
+import java.util.List;
+
+import static junit.framework.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * @author quynhlt
@@ -69,5 +69,17 @@ public class BankAccountTest {
 		verify(mockDAO).save(captorSaveAccount.capture());
 		assertEquals(captorSaveAccount.getValue().getBalance(), 0.0, 0.01);
 		assertEquals((captorSaveAccount.getValue()).getAccountNumber(), accountNumber);
+	}
+
+	@Test
+	public void testAfterDepositBalanceChangeAndIsPersistent() {
+		ArgumentCaptor<Account> argument = ArgumentCaptor.forClass(Account.class);
+		String accountNumber = "1234567890";
+		float amount = 200;
+		Account account = createAccount(accountNumber);
+		BankAccount.deposit(amount, account);
+		verify(mockDAO, times(1)).save(argument.capture());
+		List<Account> accountDeposit = argument.getAllValues();
+		assertEquals(accountDeposit.get(1).getBalance(), amount, 0.01);
 	}
 }
