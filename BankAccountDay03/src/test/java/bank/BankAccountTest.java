@@ -3,6 +3,7 @@
  */
 package test.java.bank;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import main.java.bank.BankAccount;
 import main.java.bank.entity.Account;
@@ -32,5 +33,15 @@ public class BankAccountTest {
 	public void allowLengthOfAccountNumberIs10() {
 		Account account = createAccount("123456789");
 		assertEquals(-1, BankAccount.open(account));
+	}
+	@Test
+	public void valueOfAccountNumberIsNumberValue() {
+		try {
+			Account account = createAccount("123456789A");
+			assertEquals(0, BankAccount.open(account));
+			fail();
+		} catch (RuntimeException e) {
+			assertEquals("Account number contains number value", e.getMessage());
+		}
 	}
 }
