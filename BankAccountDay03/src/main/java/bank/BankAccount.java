@@ -10,13 +10,13 @@ import main.java.bank.entity.Account;
  * 
  */
 public class BankAccount {
+	private static final int INVALID_BALANCE = -1;
 
-	
-	public static int openAccount(Account account) {
+	public static int open(Account account) {
 		int balance = 0;
 		if (account.getAccountNumber().isEmpty()) {
-			balance = -1;
-		} 
+			balance = INVALID_BALANCE;
+		}
 		return balance;
 	}
 
