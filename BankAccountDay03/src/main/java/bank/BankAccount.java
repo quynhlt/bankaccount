@@ -13,6 +13,7 @@ public class BankAccount {
 	private static final int INVALID_BALANCE = -1;
 	private static final int MAXLENGTH = 10;
 	public static final String ERROR_FORMAT_NUMBER = "Account number contains number value";
+	private static BankAccountDAO bankAccountDAO;
 
 	public static int open(Account account) {
 		int balance = 0;
@@ -23,7 +24,7 @@ public class BankAccount {
 				if (!isNumber(account.getAccountNumber())) {
 					throw new RuntimeException("Account number contains number value");
 				} else {
-
+					save(account);
 				}
 			} else {
 				balance = INVALID_BALANCE;
@@ -41,9 +42,12 @@ public class BankAccount {
 		}
 	}
 
+	private static Account save(Account account) {
+		return bankAccountDAO.save(account);
+	}
+
 	public static void setBankAccountDAO(BankAccountDAO mockDAO) {
-		// TODO Auto-generated method stub
-		
+		BankAccount.bankAccountDAO = mockDAO;
 	}
 
 }
