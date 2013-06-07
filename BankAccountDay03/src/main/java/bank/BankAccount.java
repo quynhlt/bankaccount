@@ -17,10 +17,27 @@ public class BankAccount {
 		int balance = 0;
 		if (account.getAccountNumber().isEmpty()) {
 			balance = INVALID_BALANCE;
-		} else if (account.getAccountNumber().length() != MAXLENGTH) {
-			balance = INVALID_BALANCE;
+		} else {
+			if (account.getAccountNumber().length() == 10) {
+				if (!isNumber(account.getAccountNumber())) {
+					throw new RuntimeException("Account number contains number value");
+				} else {
+
+				}
+			} else {
+				balance = INVALID_BALANCE;
+			}
 		}
 		return balance;
+	}
+
+	private static boolean isNumber(String accountNumber) {
+		try {
+			Long.parseLong(accountNumber);
+			return true;
+		} catch (RuntimeException exception) {
+			return false;
+		}
 	}
 
 }
