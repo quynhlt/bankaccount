@@ -16,6 +16,8 @@ public class BankAccount {
 		int balance = 0;
 		if (account.getAccountNumber().isEmpty()) {
 			balance = INVALID_BALANCE;
+		} else if (account.getAccountNumber().length() != 10) {
+			balance = INVALID_BALANCE;
 		}
 		return balance;
 	}
