@@ -41,4 +41,9 @@ public class BankAccount {
 		}
 	}
 
+	public static void setBankAccountDAO(BankAccountDAO mockDAO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
