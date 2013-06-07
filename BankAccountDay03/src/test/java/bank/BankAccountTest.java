@@ -28,4 +28,9 @@ public class BankAccountTest {
 		account.setOpenTimestampt("07/06/2013");
 		return account;
 	}
+	@Test
+	public void allowLengthOfAccountNumberIs10() {
+		Account account = createAccount("123456789");
+		assertEquals(-1, BankAccount.open(account));
+	}
 }
