@@ -23,7 +23,10 @@ public class BankAccountTest {
 	}
 
 	private Account createAccount(String accountNumber) {
-		
-		return null;
+		Account account = new Account();
+		account.setAccountNumber(accountNumber);
+		account.setBalance(0);
+		account.setOpenTimestampt("07/06/2013");
+		return account;
 	}
 }
