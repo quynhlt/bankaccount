@@ -28,6 +28,9 @@ public class BankAccount {
 	}
 
 	public static BankAccountDTO deposit(String accountNumber, float amount, String description) {
-		return null;
+		BankAccountDTO newAccount = createAccount(accountNumber);
+		newAccount.setBalance(newAccount.getBalance() + amount);
+		newAccount.setDescription(description);
+		return mockDAO.save(newAccount);
 	}
 }

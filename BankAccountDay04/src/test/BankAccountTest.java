@@ -46,10 +46,11 @@ public class BankAccountTest {
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
 		BankAccount.openAccount(accountNumber);
 		float amount = 200F;
-		String description  = "deposit with amount is 200" ;
+		String description = "deposit with amount is 200";
 		BankAccount.deposit(accountNumber, amount, description);
 		verify(mockDAO, times(2)).save(argument.capture());
 		assertEquals(argument.getValue().getBalance(), amount, 0.01);
+		assertEquals(argument.getValue().getDescription(), description);
 	}
 
 }
