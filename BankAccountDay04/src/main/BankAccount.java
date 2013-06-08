@@ -3,6 +3,7 @@
  */
 package main;
 
+
 /**
  * @author quynhlt
  * 
@@ -15,8 +16,15 @@ public class BankAccount {
 	}
 
 	public static BankAccountDTO openAccount(String accountNumber) {
-		return null;
-
+		BankAccountDTO newAccount = createAccount(accountNumber);
+		return mockDAO.save(newAccount);
 	}
 
+	private static BankAccountDTO createAccount(String accountNumber) {
+		BankAccountDTO account = new BankAccountDTO();
+		account.setAccountNumber(accountNumber);
+		account.setBalance(0);
+		account.setOpenTimestampt("08/06/2013");
+		return account;
+	}
 }

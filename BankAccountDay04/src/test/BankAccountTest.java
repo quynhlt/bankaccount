@@ -19,6 +19,7 @@ import org.mockito.ArgumentCaptor;
  */
 public class BankAccountTest {
 	private BankAccountDAO mockDAO = mock(BankAccountDAO.class);
+
 	@Before
 	public void setUp() {
 		reset(mockDAO);
