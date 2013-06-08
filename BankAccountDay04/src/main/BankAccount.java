@@ -3,7 +3,6 @@
  */
 package main;
 
-
 /**
  * @author quynhlt
  * 
@@ -26,5 +25,9 @@ public class BankAccount {
 		account.setBalance(0);
 		account.setOpenTimestampt("08/06/2013");
 		return account;
+	}
+
+	public static BankAccountDTO deposit(String accountNumber, float amount, String description) {
+		return null;
 	}
 }
