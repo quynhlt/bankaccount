@@ -10,7 +10,7 @@ package main;
 public class TransactionDAO {
 
 	public TransactionDTO save(TransactionDTO transactionDTO) {
-		return null;
+		return transactionDTO;
 	}
 
 }

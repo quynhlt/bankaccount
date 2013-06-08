@@ -27,10 +27,10 @@ public class BankAccount {
 		return account;
 	}
 
-	public static BankAccountDTO deposit(String accountNumber, float amount, String description) {
-		BankAccountDTO newAccount = createAccount(accountNumber);
-		newAccount.setBalance(newAccount.getBalance() + amount);
-		newAccount.setDescription(description);
-		return mockDAO.save(newAccount);
+	public static BankAccountDTO dotransaction(BankAccountDTO account, float amount, String description) {
+		System.out.print("account"+account);
+		account.setBalance(account.getBalance() + amount);
+		account.setDescription(description);
+		return mockDAO.save(account);
 	}
 }

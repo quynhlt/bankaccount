@@ -10,7 +10,7 @@ package main;
 public class BankAccountDAO {
 
 	public BankAccountDTO save(BankAccountDTO account) {
-		return null;
+		return account;
 	}
 
 }

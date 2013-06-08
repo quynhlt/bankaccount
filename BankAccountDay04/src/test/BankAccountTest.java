@@ -40,18 +40,38 @@ public class BankAccountTest {
 		assertEquals((captorSaveAccount.getValue()).getAccountNumber(), accountNumber);
 	}
 
-	//Step 3
+	// Step 3
 	@Test
 	public void testAfterDepositBalanceChangeAndIsPersistent() {
 		String accountNumber = "1234567890";
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
-		BankAccount.openAccount(accountNumber);
+		BankAccountDTO accountDTO = BankAccount.openAccount(accountNumber);
 		float amount = 200F;
 		String description = "deposit with amount is 200";
-		BankAccount.deposit(accountNumber, amount, description);
+		BankAccount.dotransaction(accountDTO, amount, description);
 		verify(mockDAO, times(2)).save(argument.capture());
 		assertEquals(argument.getValue().getBalance(), amount, 0.01);
 		assertEquals(argument.getValue().getDescription(), description);
 	}
 
+	// Step 5
+	@Test
+	public void testAfterWithdrawBalanceChangeAndIsPersistent() {
+		String accountNumber = "1234567890";
+		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		BankAccountDTO accountDTO = BankAccount.openAccount(accountNumber);
+		float amount = 200F;
+		String description = "deposit with amount is 200";
+		BankAccount.dotransaction(accountDTO, amount, description);
+		verify(mockDAO, times(2)).save(argument.capture());
+		assertEquals(argument.getValue().getBalance(), amount, 0.01);
+		assertEquals(argument.getValue().getDescription(), description);
+
+		amount = -50F;
+		description = "withdraw with amount is 50";
+		BankAccount.dotransaction(accountDTO, amount, description);
+		verify(mockDAO, times(3)).save(argument.capture());
+		assertEquals(argument.getValue().getBalance(), 150L, 0.01);
+		assertEquals(argument.getValue().getDescription(), description);
+	}
 }
