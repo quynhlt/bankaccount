@@ -40,6 +40,7 @@ public class BankAccountTest {
 		assertEquals((captorSaveAccount.getValue()).getAccountNumber(), accountNumber);
 	}
 
+	//Step 3
 	@Test
 	public void testAfterDepositBalanceChangeAndIsPersistent() {
 		String accountNumber = "1234567890";
