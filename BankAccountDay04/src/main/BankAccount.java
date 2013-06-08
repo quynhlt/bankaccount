@@ -14,9 +14,11 @@ public class BankAccount {
 		BankAccount.mockDAO = mockDAO;
 	}
 
+
 	public static BankAccountDTO openAccount(String accountNumber) {
 		BankAccountDTO newAccount = createAccount(accountNumber);
-		return mockDAO.save(newAccount);
+		mockDAO.save(newAccount);
+		return newAccount;
 	}
 
 	private static BankAccountDTO createAccount(String accountNumber) {
