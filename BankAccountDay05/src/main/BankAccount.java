@@ -28,4 +28,9 @@ public class BankAccount {
 		return account;
 	}
 
+	public static void dotransaction(BankAccountDTO accountDTO, float amount, String description) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

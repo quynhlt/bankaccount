@@ -18,7 +18,7 @@ import org.mockito.ArgumentCaptor;
 
 /**
  * @author quynhlt
- *
+ * 
  */
 public class BankAccountTest {
 
@@ -41,4 +41,27 @@ public class BankAccountTest {
 		assertEquals((captorSaveAccount.getValue()).getAccountNumber(), accountNumber);
 	}
 
+	@Test
+	public void transactionAndIsPersistent() {
+		// open account
+		String accountNumber = "1234567890";
+		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		BankAccountDTO accountDTO = BankAccount.openAccount(accountNumber);
+
+		// deposit
+		float amount = 200F;
+		String description = "Deposit with amount is 200";
+		BankAccount.dotransaction(accountDTO, amount, description);
+		verify(mockBankAccountDAO, times(2)).save(argument.capture());
+		assertEquals(argument.getValue().getBalance(), amount, 0.01);
+		assertEquals(argument.getValue().getDescription(), description);
+
+		// withdraw
+		amount = -50F;
+		description = "Withdraw with amount is 50";
+		BankAccount.dotransaction(accountDTO, amount, description);
+		verify(mockBankAccountDAO, times(3)).save(argument.capture());
+		assertEquals(argument.getValue().getBalance(), 150F, 0.01);
+		assertEquals(argument.getValue().getDescription(), description);
+	}
 }
