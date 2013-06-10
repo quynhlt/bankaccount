@@ -11,7 +11,7 @@ public class BankAccountDTO {
 	private String accountNumber;
 	private float balance;
 	private String openTimestampt;
-
+	private String description;
 	/**
 	 * @return the accountNumber
 	 */
@@ -57,4 +57,17 @@ public class BankAccountDTO {
 		this.openTimestampt = openTimestampt;
 	}
 
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

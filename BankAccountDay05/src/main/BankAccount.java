@@ -8,14 +8,24 @@ package main;
  * 
  */
 public class BankAccount {
+	private static BankAccountDAO mockBankAccountDAO;
 
 	public static void setBankAccountDAO(BankAccountDAO mockBankAccountDAO) {
-		// TODO Auto-generated method stub
-
+		BankAccount.mockBankAccountDAO = mockBankAccountDAO;
 	}
 
 	public static BankAccountDTO openAccount(String accountNumber) {
-		return null;
+		BankAccountDTO accountDTO = createAccount(accountNumber);
+		mockBankAccountDAO.save(accountDTO);
+		return accountDTO;
+	}
+
+	private static BankAccountDTO createAccount(String accountNumber) {
+		BankAccountDTO account = new BankAccountDTO();
+		account.setAccountNumber(accountNumber);
+		account.setBalance(0);
+		account.setOpenTimestampt("08/06/2013");
+		return account;
 	}
 
 }

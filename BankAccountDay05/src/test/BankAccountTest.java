@@ -6,6 +6,7 @@ package test;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import main.BankAccount;
 import main.BankAccountDAO;
@@ -17,7 +18,7 @@ import org.mockito.ArgumentCaptor;
 
 /**
  * @author quynhlt
- * 
+ *
  */
 public class BankAccountTest {
 
@@ -31,7 +32,7 @@ public class BankAccountTest {
 
 	// Step 1 and 2
 	@Test
-	public void openAccountHasZeroBalanceAndIsPersistent() {
+	public void testOpenAccountHasZeroBalanceAndIsPersistent() {
 		String accountNumber = "1234567890";
 		BankAccount.openAccount(accountNumber);
 		ArgumentCaptor<BankAccountDTO> captorSaveAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
