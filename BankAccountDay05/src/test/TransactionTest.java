@@ -7,8 +7,6 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
-import main.BankAccount;
-import main.BankAccountDTO;
 import main.Transaction;
 import main.TransactionDAO;
 import main.TransactionDTO;

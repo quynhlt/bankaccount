@@ -5,13 +5,21 @@ package main;
 
 /**
  * @author quynhlt
- *
+ * 
  */
 public class TransactionDTO {
 	private String accountNumber;
 	private float amount;
 	private Long timestamp;
 	private String description;
+
+	public TransactionDTO(String accountNumber, float amount, Long timestamp, String description) {
+		this.accountNumber = accountNumber;
+		this.amount = amount;
+		this.timestamp = timestamp;
+		this.description = description;
+	}
+
 	/**
 	 * @return the accountNumber
 	 */
@@ -20,26 +28,10 @@ public class TransactionDTO {
 	}
 
 	/**
-	 * @param accountNumber
-	 *            the accountNumber to set
-	 */
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	
-	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return description;
-	}
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	/**
@@ -50,25 +42,10 @@ public class TransactionDTO {
 	}
 
 	/**
-	 * @param amount the amount to set
-	 */
-	public void setAmount(float amount) {
-		this.amount = amount;
-	}
-
-	/**
 	 * @return the timestamp
 	 */
 	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	/**
-	 * @param timestamp the timestamp to set
-	 */
-	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	
 }
