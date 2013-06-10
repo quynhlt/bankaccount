@@ -28,9 +28,11 @@ public class BankAccount {
 		return account;
 	}
 
-	public static void dotransaction(BankAccountDTO accountDTO, float amount, String description) {
-		// TODO Auto-generated method stub
-		
+	public static BankAccountDTO dotransaction(BankAccountDTO accountDTO, float amount, String description) {
+		accountDTO.setBalance(accountDTO.getBalance() + amount);
+		accountDTO.setDescription(description);
+		mockBankAccountDAO.save(accountDTO);
+		return accountDTO;
 	}
 
 }
