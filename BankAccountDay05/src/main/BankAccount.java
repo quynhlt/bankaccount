@@ -35,9 +35,10 @@ public class BankAccount {
 		return accountDTO;
 	}
 
-	public static void findAccountByAccountNumber(String accountNumber) {
-		// TODO Auto-generated method stub
-		
+	public static BankAccountDTO findAccountByAccountNumber(String accountNumber) {
+		BankAccountDTO accountDTO = createAccount(accountNumber);
+		mockBankAccountDAO.findAccountByAccountNumber(accountDTO);
+		return accountDTO;
 	}
 
 }

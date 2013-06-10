@@ -13,4 +13,8 @@ public class BankAccountDAO {
 		return null;
 	}
 
+	public BankAccountDTO findAccountByAccountNumber(BankAccountDTO accountNumber) {
+		return null;
+	}
+
 }

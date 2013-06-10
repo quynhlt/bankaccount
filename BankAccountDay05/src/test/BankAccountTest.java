@@ -70,7 +70,7 @@ public class BankAccountTest {
 		String accountNumber = "1234567890";
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
 		BankAccount.findAccountByAccountNumber(accountNumber);
-		verify(mockBankAccountDAO).save(argument.capture());
+		verify(mockBankAccountDAO).findAccountByAccountNumber(argument.capture());
 		assertEquals((argument.getValue()).getAccountNumber(), accountNumber);
 	}
 }
