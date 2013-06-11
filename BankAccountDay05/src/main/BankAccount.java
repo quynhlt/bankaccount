@@ -24,7 +24,7 @@ public class BankAccount {
 		BankAccountDTO account = new BankAccountDTO();
 		account.setAccountNumber(accountNumber);
 		account.setBalance(0);
-		account.setOpenTimestampt("08/06/2013");
+		account.setOpenTimestampt(System.currentTimeMillis());
 		return account;
 	}
 

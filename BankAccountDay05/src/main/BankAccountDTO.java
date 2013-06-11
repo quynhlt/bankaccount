@@ -10,7 +10,7 @@ package main;
 public class BankAccountDTO {
 	private String accountNumber;
 	private float balance;
-	private String openTimestampt;
+	private Long openTimestampt;
 	private String description;
 	/**
 	 * @return the accountNumber
@@ -42,20 +42,7 @@ public class BankAccountDTO {
 		this.balance = balance;
 	}
 
-	/**
-	 * @return the openTimestampt
-	 */
-	public String getOpenTimestampt() {
-		return openTimestampt;
-	}
-
-	/**
-	 * @param openTimestampt
-	 *            the openTimestampt to set
-	 */
-	public void setOpenTimestampt(String openTimestampt) {
-		this.openTimestampt = openTimestampt;
-	}
+	
 
 	/**
 	 * @return the description
@@ -69,5 +56,19 @@ public class BankAccountDTO {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the openTimestampt
+	 */
+	public Long getOpenTimestampt() {
+		return openTimestampt;
+	}
+
+	/**
+	 * @param openTimestampt the openTimestampt to set
+	 */
+	public void setOpenTimestampt(Long openTimestampt) {
+		this.openTimestampt = openTimestampt;
 	}
 }

@@ -29,19 +29,29 @@ public class TransactionTest {
 	}
 
 	@Test
-	public void testTransactionIsExecutedAndIsPersistent() {
+	public void testTransactionHasLoggedWhenCreateNewTransaction() {
 		String accountNumber = "1234567890";
 		float amount = 200F;
 		Long timestamp = System.currentTimeMillis();
 		String description = "Deposit";
 		Transaction.createTransaction(accountNumber, timestamp, amount, description);
-
 		ArgumentCaptor<TransactionDTO> logTransaction = ArgumentCaptor.forClass(TransactionDTO.class);
-		verify(mockTransactionDao).save(logTransaction.capture());
+		verify(mockTransactionDao).createTransaction(logTransaction.capture());
 		assertEquals(logTransaction.getValue().getAccountNumber(), accountNumber);
 		assertEquals((logTransaction.getValue()).getAmount(), amount, 0.01);
 		assertEquals((logTransaction.getValue()).getTimestamp(), timestamp);
 		assertEquals((logTransaction.getValue()).getDescription(), description);
 	}
 
+	@Test
+	public void testCanfindAllTransactionsByAccountNumber() {
+		String accountNumber = "1234567890";
+		Transaction.getTransactionsOccurred(accountNumber);
+		ArgumentCaptor<TransactionDTO> logTransaction = ArgumentCaptor.forClass(TransactionDTO.class);
+		verify(mockTransactionDao).getTransactionsOccurred(logTransaction.capture());
+		assertEquals(logTransaction.getValue().getAccountNumber(), accountNumber);
+		
+		
+	}
+	
 }

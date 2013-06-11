@@ -30,47 +30,69 @@ public class BankAccountTest {
 		BankAccount.setBankAccountDAO(mockBankAccountDAO);
 	}
 
-	// Step 1 and 2
+	@Test
+	public void testOpenAccountShouldSaveToDatabase() {
+		String accountNumber = "1234567890";
+		BankAccount.openAccount(accountNumber);
+		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
+		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
+		assertEquals((openAccount.getValue()).getAccountNumber(), accountNumber);
+	}
+
 	@Test
 	public void testOpenAccountHasZeroBalanceAndIsPersistent() {
 		String accountNumber = "1234567890";
 		BankAccount.openAccount(accountNumber);
-		ArgumentCaptor<BankAccountDTO> captorSaveAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
-		verify(mockBankAccountDAO).save(captorSaveAccount.capture());
-		assertEquals(captorSaveAccount.getValue().getBalance(), 0.0, 0.01);
-		assertEquals((captorSaveAccount.getValue()).getAccountNumber(), accountNumber);
+		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
+		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
+		assertEquals(openAccount.getValue().getBalance(), 0.0, 0.01);
 	}
 
 	@Test
-	public void transactionAndIsPersistent() {
-		// open account
-		String accountNumber = "1234567890";
+	public void testBalanceHasChangedWhenDeposit() {
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
-		BankAccountDTO accountDTO = BankAccount.openAccount(accountNumber);
-
-		// deposit
-		float amount = 200F;
+		String accountNumber = "1234567890";
+		float amountDefault = 0F;
+		float amountDeposit = 50F;
+		float amountExpected = amountDefault + amountDeposit;
+		BankAccountDTO accountDTO = createAccount(accountNumber, amountDefault);
 		String description = "Deposit with amount is 200";
-		BankAccount.dotransaction(accountDTO, amount, description);
-		verify(mockBankAccountDAO, times(2)).save(argument.capture());
-		assertEquals(argument.getValue().getBalance(), amount, 0.01);
-		assertEquals(argument.getValue().getDescription(), description);
-
-		// withdraw
-		amount = -50F;
-		description = "Withdraw with amount is 50";
-		BankAccount.dotransaction(accountDTO, amount, description);
-		verify(mockBankAccountDAO, times(3)).save(argument.capture());
-		assertEquals(argument.getValue().getBalance(), 150F, 0.01);
+		BankAccount.dotransaction(accountDTO, amountDeposit, description);
+		verify(mockBankAccountDAO, times(1)).save(argument.capture());
+		assertEquals(argument.getValue().getBalance(), amountExpected, 0.01);
 		assertEquals(argument.getValue().getDescription(), description);
 	}
 
 	@Test
-	public void canGetAccountByAccountNumber() {
+	public void testBalanceHasChangedWhenWithdraw() {
+		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
+		String accountNumber = "1234567890";
+		float amountDefault = 200F;
+		float amountWidraw = 50F;
+		float amountExpected = amountDefault - amountWidraw;
+		BankAccountDTO accountDTO = createAccount(accountNumber, amountDefault);
+		String description = "Deposit with amount is 200";
+		BankAccount.dotransaction(accountDTO, -amountWidraw, description);
+		verify(mockBankAccountDAO, times(1)).save(argument.capture());
+		assertEquals(argument.getValue().getBalance(), amountExpected, 0.01);
+		assertEquals(argument.getValue().getDescription(), description);
+	}
+
+	@Test
+	public void testCanGetAccountByAccountNumber() {
 		String accountNumber = "1234567890";
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
 		BankAccount.findAccountByAccountNumber(accountNumber);
-		verify(mockBankAccountDAO).findAccountByAccountNumber(argument.capture());
+		verify(mockBankAccountDAO, times(1)).findAccountByAccountNumber(argument.capture());
 		assertEquals((argument.getValue()).getAccountNumber(), accountNumber);
 	}
+
+	private BankAccountDTO createAccount(String accountNumber, float balance) {
+		BankAccountDTO account = new BankAccountDTO();
+		account.setAccountNumber(accountNumber);
+		account.setBalance(balance);
+		account.setOpenTimestampt(System.currentTimeMillis());
+		return account;
+	}
+
 }

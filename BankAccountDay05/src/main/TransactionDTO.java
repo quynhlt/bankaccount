@@ -13,6 +13,10 @@ public class TransactionDTO {
 	private Long timestamp;
 	private String description;
 
+	public TransactionDTO(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
 	public TransactionDTO(String accountNumber, float amount, Long timestamp, String description) {
 		this.accountNumber = accountNumber;
 		this.amount = amount;
