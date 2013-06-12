@@ -13,7 +13,7 @@ public class BankAccountDAO {
 		return null;
 	}
 
-	public BankAccountDTO findAccountByAccountNumber(BankAccountDTO accountNumber) {
+	public BankAccountDTO getByAccountNumber(String accountNumber) {
 		return null;
 	}
 

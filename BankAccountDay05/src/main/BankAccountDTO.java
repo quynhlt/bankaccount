@@ -12,6 +12,13 @@ public class BankAccountDTO {
 	private float balance;
 	private Long openTimestampt;
 	private String description;
+	public BankAccountDTO(String accountNumber){
+		this.accountNumber = accountNumber;
+	}
+	public BankAccountDTO(String accountNumber, float balance) {
+		this.accountNumber = accountNumber;
+		this.balance = balance;
+	}
 	/**
 	 * @return the accountNumber
 	 */
