@@ -9,11 +9,11 @@ package main;
  */
 public class BankAccountDAO {
 
-	public BankAccountDTO save(BankAccountDTO capture) {
+	public BankAccountDTO save(BankAccountDTO bankAccount) {
 		return null;
 	}
 
-	public BankAccountDTO getByAccountNumber(String accountNumber) {
+	public BankAccountDTO getAccount(String accountNumber) {
 		return null;
 	}
 

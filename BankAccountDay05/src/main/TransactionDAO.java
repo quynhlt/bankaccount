@@ -11,11 +11,20 @@ import java.util.List;
  */
 public class TransactionDAO {
 
-	public TransactionDTO createTransaction(TransactionDTO transaction) {
+	public TransactionDTO doTransaction(TransactionDTO transaction) {
 		return null;
 	}
 
-	public List<TransactionDTO> getTransactionsOccurred(TransactionDTO transaction) {
+	public List<TransactionDTO> getTransactionsOccurred(String accountNumber) {
 		return null;
 	}
+
+	public List<TransactionDTO> getTransactionsOccurred(String accountNumber, Long startTime, Long stopTime) {
+		return null;
+	}
+
+	public List<TransactionDTO> getNumberOfNewTransactions(String accountNumber, int n) {
+		return null;
+	}
+	
 }

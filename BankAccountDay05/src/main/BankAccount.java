@@ -10,7 +10,7 @@ import java.util.Calendar;
  * 
  */
 public class BankAccount {
-	private static BankAccountDAO mockBankAccountDAO;
+	private static BankAccountDAO bankAccountDAO;
 	private static Calendar calendar;
 
 	public static void setCalendar(Calendar calendar) {
@@ -18,12 +18,12 @@ public class BankAccount {
 	}
 
 	public static void setBankAccountDAO(BankAccountDAO mockBankAccountDAO) {
-		BankAccount.mockBankAccountDAO = mockBankAccountDAO;
+		BankAccount.bankAccountDAO = mockBankAccountDAO;
 	}
 
 	public static BankAccountDTO openAccount(String accountNumber) {
 		BankAccountDTO accountDTO = createAccount(accountNumber);
-		mockBankAccountDAO.save(accountDTO);
+		bankAccountDAO.save(accountDTO);
 		return accountDTO;
 	}
 
@@ -34,24 +34,25 @@ public class BankAccount {
 		return account;
 	}
 
-	public static BankAccountDTO getByAccountNumber(String accountNumber) {
-		return mockBankAccountDAO.getByAccountNumber(accountNumber);
+	public static BankAccountDTO getAccount(String accountNumber) {
+		return bankAccountDAO.getAccount(accountNumber);
 	}
 
 	public static void deposit(String accountNumber, float amount, String description) {
-		BankAccountDTO bankAccountDTO = mockBankAccountDAO.getByAccountNumber(accountNumber);
+		BankAccountDTO bankAccountDTO = bankAccountDAO.getAccount(accountNumber);
 		bankAccountDTO.setBalance(bankAccountDTO.getBalance() + amount);
-		mockBankAccountDAO.save(bankAccountDTO);
+		bankAccountDAO.save(bankAccountDTO);
 		Long timestamp = calendar.getTimeInMillis();
-		Transaction.createTransaction(accountNumber, timestamp, amount, description);
+		Transaction.doTransaction(accountNumber, timestamp, amount, description);
 	}
 
-	public static void withdraw(String accountNumber, float amount, String description) {
-		BankAccountDTO bankAccountDTO = mockBankAccountDAO.getByAccountNumber(accountNumber);
+	public static BankAccountDTO withdraw(String accountNumber, float amount, String description) {
+		BankAccountDTO bankAccountDTO = bankAccountDAO.getAccount(accountNumber);
 		bankAccountDTO.setBalance(bankAccountDTO.getBalance() - amount);
-		mockBankAccountDAO.save(bankAccountDTO);
+		bankAccountDAO.save(bankAccountDTO);
 		Long timestamp = calendar.getTimeInMillis();
-		Transaction.createTransaction(accountNumber, timestamp, -amount, description);
+		Transaction.doTransaction(accountNumber, timestamp, -amount, description);
+		return bankAccountDTO;
 	}
 
 }
