@@ -53,7 +53,7 @@ public class BankAccountTest {
 	@Test
 	public void testGetAccountByAccountNumber() {
 		String accountNumber = "1234567890";
-		BankAccountDTO bankAccount = new BankAccountDTO(accountNumber);
+		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
 		BankAccountDTO bankActual = BankAccount.getAccount(bankAccount.getAccountNumber());
 		verify(mockBankAccountDAO, times(1)).getAccount(bankAccount.getAccountNumber());
@@ -65,11 +65,11 @@ public class BankAccountTest {
 		String accountNumber = "1234567890";
 		float amount = 200F;
 		String description = "Deposit with amount is 200";
-		BankAccountDTO bankAccount = new BankAccountDTO(accountNumber);
+		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
 		BankAccount.deposit(accountNumber, amount, description);
-		verify(mockBankAccountDAO, times(1)).save(argument.capture());
+		verify(mockBankAccountDAO, times(2)).save(argument.capture());
 		assertEquals(amount, argument.getValue().getBalance(), 0.01);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
 	}
@@ -79,7 +79,7 @@ public class BankAccountTest {
 		String accountNumber = "1234567890";
 		float amount = 200F;
 		String description = "Deposit with amount is 200";
-		BankAccountDTO bankAccount = new BankAccountDTO(accountNumber);
+		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
 		Long timeStamp = mockCalendar.getTimeInMillis();
 		BankAccount.deposit(accountNumber, amount, description);
@@ -97,33 +97,33 @@ public class BankAccountTest {
 		float balance = 100F;
 		float amount = 50F;
 		String description = "Withdraw with amount is 50";
-		float expected = balance - amount;
-		BankAccountDTO bankAccount = new BankAccountDTO(accountNumber, balance);
+		float expectedAmount = balance - amount;
+		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
+		bankAccount.setBalance(balance);
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
 		BankAccount.withdraw(accountNumber, amount, description);
-		verify(mockBankAccountDAO, times(1)).save(argument.capture());
-		assertEquals(expected, argument.getValue().getBalance(), 0.01);
+		verify(mockBankAccountDAO, times(2)).save(argument.capture());
+		assertEquals(expectedAmount, argument.getValue().getBalance(), 0.01);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
 	}
 
 	@Test
 	public void testWithdrawShouldBeSaveToDB() {
 		String accountNumber = "1234567890";
-		float balance = 0F;
 		float amount = 50F;
 		String description = "Withdraw with amount is 50";
-		float expected = balance - amount;
 		Long timeStamp = mockCalendar.getTimeInMillis();
-		BankAccountDTO bankAccount = new BankAccountDTO(accountNumber);
+		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
 		BankAccount.withdraw(accountNumber, amount, description);
 		ArgumentCaptor<TransactionDTO> argument = ArgumentCaptor.forClass(TransactionDTO.class);
 		verify(mockTransactionDAO, times(1)).doTransaction(argument.capture());
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
-		assertEquals(expected, argument.getValue().getAmount());
+		assertEquals(-amount, argument.getValue().getAmount());
 		assertEquals(description, argument.getValue().getDescription());
 		assertEquals(timeStamp, argument.getValue().getTimestamp());
+
 	}
 
 	@Test
@@ -136,7 +136,8 @@ public class BankAccountTest {
 		expectedTransactions.add(withdraw);
 		when(mockTransactionDAO.getTransactionsOccurred(accountNumber)).thenReturn(expectedTransactions);
 		List<TransactionDTO> actualTransactions = mockTransactionDAO.getTransactionsOccurred(accountNumber);
-		verify(mockTransactionDAO, times(1)).getTransactionsOccurred(accountNumber);
+		Transaction.getTransactionsOccurred(accountNumber);
+		verify(mockTransactionDAO, times(2)).getTransactionsOccurred(accountNumber);
 		assertTrue(expectedTransactions.size() == actualTransactions.size());
 		int length = actualTransactions.size();
 		for (int i = 0; i < length; i++) {
@@ -156,7 +157,8 @@ public class BankAccountTest {
 		Long stopTime = 50000L;
 		when(mockTransactionDAO.getTransactionsOccurred(accountNumber, startTime, stopTime)).thenReturn(expectedTransactions);
 		List<TransactionDTO> actualTransactions = mockTransactionDAO.getTransactionsOccurred(accountNumber, startTime, stopTime);
-		verify(mockTransactionDAO, times(1)).getTransactionsOccurred(accountNumber, startTime, stopTime);
+		Transaction.getTransactionsOccurred(accountNumber, startTime, stopTime);
+		verify(mockTransactionDAO, times(2)).getTransactionsOccurred(accountNumber, startTime, stopTime);
 		int length = actualTransactions.size();
 		assertTrue(length == actualTransactions.size());
 		for (int i = 0; i < length; i++) {
@@ -173,9 +175,10 @@ public class BankAccountTest {
 		expectedTransactions.add(deposit);
 		expectedTransactions.add(withdraw);
 		int n = 2;
-		when(mockTransactionDAO.getNumberOfNewTransactions(accountNumber, n)).thenReturn(expectedTransactions);
-		List<TransactionDTO> actualTransactions = mockTransactionDAO.getNumberOfNewTransactions(accountNumber, n);
-		verify(mockTransactionDAO, times(1)).getNumberOfNewTransactions(accountNumber, n);
+		when(mockTransactionDAO.getTransactionsOccurred(accountNumber, n)).thenReturn(expectedTransactions);
+		List<TransactionDTO> actualTransactions = mockTransactionDAO.getTransactionsOccurred(accountNumber, n);
+		Transaction.getTransactionsOccurred(accountNumber, n);
+		verify(mockTransactionDAO, times(2)).getTransactionsOccurred(accountNumber, n);
 		int length = actualTransactions.size();
 		assertTrue(length == actualTransactions.size());
 		for (int i = 0; i < length; i++) {

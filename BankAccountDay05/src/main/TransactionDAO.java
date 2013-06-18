@@ -23,7 +23,7 @@ public class TransactionDAO {
 		return null;
 	}
 
-	public List<TransactionDTO> getNumberOfNewTransactions(String accountNumber, int n) {
+	public List<TransactionDTO> getTransactionsOccurred(String accountNumber, int n) {
 		return null;
 	}
 	

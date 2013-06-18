@@ -3,6 +3,7 @@
  */
 package main;
 
+import java.util.List;
 
 /**
  * @author quynhlt
@@ -21,4 +22,15 @@ public class Transaction {
 		return transaction;
 	}
 
+	public static List<TransactionDTO> getTransactionsOccurred(String accountNumber) {
+		return transactionDao.getTransactionsOccurred(accountNumber);
+	}
+
+	public static List<TransactionDTO> getTransactionsOccurred(String accountNumber, Long startTime, Long stopTime) {
+		return transactionDao.getTransactionsOccurred(accountNumber, startTime, stopTime);
+	}
+
+	public static List<TransactionDTO> getTransactionsOccurred(String accountNumber, int n) {
+		return transactionDao.getTransactionsOccurred(accountNumber, n);
+	}
 }
