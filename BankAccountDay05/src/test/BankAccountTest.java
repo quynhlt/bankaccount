@@ -81,7 +81,8 @@ public class BankAccountTest {
 		String description = "Deposit with amount is 200";
 		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
-		Long timeStamp = mockCalendar.getTimeInMillis();
+		Long timeStamp = System.currentTimeMillis();
+		when(mockCalendar.getTimeInMillis()).thenReturn(timeStamp);
 		BankAccount.deposit(accountNumber, amount, description);
 		ArgumentCaptor<TransactionDTO> argument = ArgumentCaptor.forClass(TransactionDTO.class);
 		verify(mockTransactionDAO, times(1)).doTransaction(argument.capture());
@@ -113,7 +114,8 @@ public class BankAccountTest {
 		String accountNumber = "1234567890";
 		float amount = 50F;
 		String description = "Withdraw with amount is 50";
-		Long timeStamp = mockCalendar.getTimeInMillis();
+		Long timeStamp = System.currentTimeMillis();
+		when(mockCalendar.getTimeInMillis()).thenReturn(timeStamp);
 		BankAccountDTO bankAccount = BankAccount.openAccount(accountNumber);
 		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber())).thenReturn(bankAccount);
 		BankAccount.withdraw(accountNumber, amount, description);
@@ -186,4 +188,15 @@ public class BankAccountTest {
 		}
 	}
 
+	@Test
+	public void testOpenAccountShouldSaveTimeStampToDB() {
+		String accountNumber = "1234567890";
+		BankAccount.openAccount(accountNumber);
+		Long timeStamp = System.currentTimeMillis();
+		when(mockCalendar.getTimeInMillis()).thenReturn(timeStamp);
+		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
+		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
+		assertTrue(openAccount.getValue().getOpenTimestampt() != null);
+		assertEquals(timeStamp, openAccount.getValue().getOpenTimestampt());
+	}
 }
