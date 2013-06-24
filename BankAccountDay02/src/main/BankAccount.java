@@ -32,10 +32,9 @@ public class BankAccount {
 	}
 
 	private static BankAccountDTO createAccount(String accountNumber) {
-		BankAccountDTO account = new BankAccountDTO();
-		account.setAccountNumber(accountNumber);
+		BankAccountDTO account = new BankAccountDTO(accountNumber);
 		account.setBalance(0);
-		account.setOpenTimestampt("08/06/2013");
+		account.setOpenTimestampt(System.currentTimeMillis());
 		return account;
 	}
 

@@ -19,7 +19,16 @@ public class Transaction {
 	}
 
 	public static List<TransactionDTO> getTransactions(String accountNumber) {
-		return transactionDAO.getTransactions(accountNumber);
+		return transactionDAO.get(accountNumber);
 	}
-	
+
+	public static List<TransactionDTO> getTransactions(String accountNumber, Long startTime, Long stopTime) {
+		return transactionDAO.get(accountNumber, startTime, stopTime);
+	}
+
+	public static List<TransactionDTO> getTransactions(String accountNumber, int numberTrans) {
+		return transactionDAO.get(accountNumber, numberTrans);
+
+	}
+
 }

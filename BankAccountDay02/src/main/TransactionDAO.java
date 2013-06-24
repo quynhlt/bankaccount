@@ -15,7 +15,15 @@ public class TransactionDAO {
 		return null;
 	}
 
-	public List<TransactionDTO> getTransactions(String accountNumber) {
+	public List<TransactionDTO> get(String accountNumber) {
+		return null;
+	}
+
+	public List<TransactionDTO> get(String accountNumber, Long startTime, Long stopTime) {
+		return null;
+	}
+
+	public List<TransactionDTO> get(String accountNumber, int numberTrans) {
 		return null;
 	}
 

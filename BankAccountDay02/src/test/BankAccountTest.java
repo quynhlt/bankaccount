@@ -4,6 +4,7 @@
 package test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -138,9 +139,41 @@ public class BankAccountTest {
 
 	// Step 7
 	@Test
-	public void testGetTransactionsOccurred() {
+	public void testgetTransactions() {
 		String accountNumber = "0123456789";
 		Transaction.getTransactions(accountNumber);
-		verify(mockTransactionDAO, times(1)).getTransactions(accountNumber);
+		verify(mockTransactionDAO, times(1)).get(accountNumber);
+	}
+
+	// Step 8
+	@Test
+	public void testgetTransactionsWithAPeriodOfTime() {
+		String accountNumber = "0123456789";
+		Long startTime = 10000L;
+		Long stopTime = 50000L;
+		Transaction.getTransactions(accountNumber, startTime, stopTime);
+		verify(mockTransactionDAO, times(1)).get(accountNumber, startTime, stopTime);
+	}
+
+	// Step 9
+	@Test
+	public void testGetNumberOfNewTransactions() {
+		String accountNumber = "0123456789";
+		int numberTrans = 2;
+		Transaction.getTransactions(accountNumber, numberTrans);
+		verify(mockTransactionDAO, times(1)).get(accountNumber, numberTrans);
+	}
+
+	// Step 10
+	@Test
+	public void testOpenAccountShouldSaveTimeStampToDB() {
+		String accountNumber = "0123456789";
+		BankAccount.openAccount(accountNumber);
+		Long timeStamp = System.currentTimeMillis();
+		when(mockCalendar.getTimeInMillis()).thenReturn(timeStamp);
+		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
+		verify(mockAccountDAO, times(1)).save(openAccount.capture());
+		assertTrue(openAccount.getValue().getOpenTimestampt() != null);
+		assertEquals(timeStamp, openAccount.getValue().getOpenTimestampt());
 	}
 }
