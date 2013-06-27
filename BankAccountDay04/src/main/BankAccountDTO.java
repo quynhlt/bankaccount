@@ -11,7 +11,7 @@ public class BankAccountDTO {
 	private String accountNumber;
 	private float balance;
 	private String description;
-
+	private Long timeStamp;
 	public BankAccountDTO(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
@@ -59,6 +59,20 @@ public class BankAccountDTO {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the timeStamp
+	 */
+	public Long getTimeStamp() {
+		return timeStamp;
+	}
+
+	/**
+	 * @param timeStamp the timeStamp to set
+	 */
+	public void setTimeStamp(Long timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 
 }

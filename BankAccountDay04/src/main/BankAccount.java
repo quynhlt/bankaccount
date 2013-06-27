@@ -24,6 +24,7 @@ public class BankAccount {
 
 	public static BankAccountDTO openAccount(String accountNumber) {
 		BankAccountDTO bankAccountDTO = new BankAccountDTO(accountNumber);
+		bankAccountDTO.setTimeStamp(System.currentTimeMillis());
 		bankAccountDAO.save(bankAccountDTO);
 		return bankAccountDTO;
 	}
@@ -49,5 +50,4 @@ public class BankAccount {
 		Long timestamp = calendar.getTimeInMillis();
 		Transaction.doTransaction(accountNumber, timestamp, -amount, description);
 	}
-
 }
