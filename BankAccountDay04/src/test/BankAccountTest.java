@@ -185,6 +185,5 @@ public class BankAccountTest {
 		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
 		assertTrue(openAccount.getValue().getTimeStamp() != null);
 		assertEquals(timeStamp, openAccount.getValue().getTimeStamp());
-
 	}
 }

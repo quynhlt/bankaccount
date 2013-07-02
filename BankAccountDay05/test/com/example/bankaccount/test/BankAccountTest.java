@@ -13,10 +13,7 @@ import java.util.Calendar;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-
-import android.test.InstrumentationTestCase;
 
 import com.example.bankaccount.BankAccount;
 import com.example.bankaccount.BankAccountDAO;
@@ -29,13 +26,16 @@ import com.example.bankaccount.TransactionDTO;
  * @author quynhlt
  * 
  */
-public class BankAccountTest extends TestCase{
 
-	private BankAccountDAO mockBankAccountDAO = mock(BankAccountDAO.class);
-	private TransactionDAO mockTransactionDAO = mock(TransactionDAO.class);
-	private Calendar mockCalendar = mock(Calendar.class);
+public class BankAccountTest extends TestCase {
+	private BankAccountDAO mockBankAccountDAO;
+	private TransactionDAO mockTransactionDAO;
+	private Calendar mockCalendar;
 
-	public void setUp() throws Exception {
+	protected void setUp() throws Exception {
+		mockBankAccountDAO = mock(BankAccountDAO.class);
+		mockTransactionDAO = mock(TransactionDAO.class);
+		mockCalendar = mock(Calendar.class);
 		reset(mockBankAccountDAO);
 		reset(mockTransactionDAO);
 		reset(mockCalendar);
@@ -45,8 +45,9 @@ public class BankAccountTest extends TestCase{
 	}
 
 	// step 1
-	@Test
+
 	public void testOpenAccountHasZeroBalanceAndPersistent() {
+
 		String accountNumber = "0123456789";
 		BankAccount.openAccount(accountNumber);
 
@@ -58,6 +59,7 @@ public class BankAccountTest extends TestCase{
 	}
 
 	// step 2
+
 	public void testGetBankAccountByAccountNumber() {
 		String accountNumber = "0123456789";
 		BankAccountDTO account = BankAccount.openAccount(accountNumber);
@@ -70,6 +72,7 @@ public class BankAccountTest extends TestCase{
 	}
 
 	// step 3
+
 	public void testDepositTransactionBalanceHasIncrease() {
 		String accountNumber = "0123456789";
 		int amount = 500;
