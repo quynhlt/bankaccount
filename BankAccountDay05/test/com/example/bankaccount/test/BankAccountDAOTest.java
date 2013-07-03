@@ -19,7 +19,11 @@ public class BankAccountDAOTest extends AndroidTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		bankaccountDAO = new BankAccountDAO(getContext());
+		// context to use to open or create the database
+		// name of the database file, or null for an in-memory database
+		bankaccountDAO = new BankAccountDAO(getContext(), null);
+		//To test
+		//bankaccountDAO = new BankAccountDAO(getContext(), DBHelper.DATABASE_NAME);// >> tests are failure
 	}
 
 	public void testSaveNewAccount() throws Exception {

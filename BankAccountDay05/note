@@ -1,0 +1,26 @@
+1, Class DBHelper được dùng để tạo một database mới với hai tham số: CONTEXT và NAME of database. Việc tạo ra một database thật 
+hoặc một in-memory database phụ thuộc vào hai tham số này.
++ Nếu để test em sẽ truyền context giả từ class test và name = null
++ Nếu để chạy thật em sẽ truyền context thật từ activity và name là value cụ thể "bankaccount.sql"
+Em đã test trên cả môi trường thật
+
+2, Trong BankAccountDAOTest khai báo một instance của BankAccountDAO kiểu thế này,
+và cần truyền context và name của database trong constructor :
+
+	private BankAccountDAO bankaccountDAO;
+	@Override
+	public void setUp() throws Exception {		
+		bankaccountDAO = new BankAccountDAO(getContext(), null);		
+	}
+	
+	
+3, Trong BankAccountDAO
+	private SQLiteDatabase db;
+	public BankAccountDAO(Context context, String name) {
+		DBHelper openHelper = new DBHelper(context, name); >> lệnh này dùng để tạo database in-memory, 
+		hoặc database thật tùy thuộc vào context truyền vào là giả hay thật, và name là null or not null
+		
+		this.db = openHelper.getWritableDatabase(); >> get database vừa tạo để test
+	}
+	
+	
