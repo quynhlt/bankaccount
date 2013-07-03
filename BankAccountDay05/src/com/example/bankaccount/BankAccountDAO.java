@@ -19,8 +19,6 @@ public class BankAccountDAO {
 	private SQLiteDatabase db;
 
 	public BankAccountDAO(Context context, String name) {
-		// context to use to open or create the database
-		// name of the database file, or null for an in-memory database
 		DBHelper openHelper = new DBHelper(context, name);
 		this.db = openHelper.getWritableDatabase();
 	}
