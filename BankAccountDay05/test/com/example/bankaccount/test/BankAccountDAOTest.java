@@ -22,7 +22,7 @@ public class BankAccountDAOTest extends AndroidTestCase {
 		bankaccountDAO = new BankAccountDAO(getContext(), null);
 	}
 
-	public void testSaveNewAccount() throws Exception {
+	public void testSaveNewAccount() {
 		BankAccountDTO bankAccount = createBankAccount("0123456789");
 		long result = bankaccountDAO.save(bankAccount);
 		assertEquals(1, result);
@@ -48,6 +48,22 @@ public class BankAccountDAOTest extends AndroidTestCase {
 			bankaccountDAO.save(bankAccount);
 		}
 		assertEquals(1, bankaccountDAO.getRecordSize());
+	}
+
+	public void testUpdateBankAccount() {
+		String accountNumber = "0123456789";
+		bankaccountDAO.save(createBankAccount(accountNumber));
+		BankAccountDTO bankAccount = bankaccountDAO.get(accountNumber);
+
+		int amount = 500;
+		Long timeStamp = System.currentTimeMillis();
+		bankAccount.setBalance(bankAccount.getBalance() + amount);
+		bankAccount.setTimeStamp(timeStamp);
+		long result = bankaccountDAO.update(bankAccount);
+
+		assertEquals(1, result);
+		assertEquals(amount, bankAccount.getBalance(), 0.01);
+		assertEquals(timeStamp, bankAccount.getTimeStamp());
 	}
 
 	private BankAccountDTO createBankAccount(String accountNumber) {

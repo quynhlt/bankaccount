@@ -31,6 +31,14 @@ public class BankAccountDAO {
 		return db.insert(DBHelper.TABLE_ACCOUNT, null, values);
 	}
 
+	public long update(BankAccountDTO bankAccountDTO) {
+		ContentValues values = new ContentValues();
+		values.put(DBHelper.ACCOUNT_NUMBER, bankAccountDTO.getAccountNumber());
+		values.put(DBHelper.BALANCE, bankAccountDTO.getBalance());
+		values.put(DBHelper.OPEN_TIME_STAMP, bankAccountDTO.getTimeStamp());
+		return db.update(DBHelper.TABLE_ACCOUNT, values, DBHelper.ACCOUNT_NUMBER + " = ?", new String[] { bankAccountDTO.getAccountNumber() });
+	}
+
 	public int getRecordSize() {
 		List<String> results = new ArrayList<String>();
 		Cursor query = db.query(DBHelper.TABLE_ACCOUNT, null, null, null, null, null, null);

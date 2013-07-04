@@ -82,7 +82,7 @@ public class BankAccountTest extends TestCase {
 
 		BankAccount.deposit(accountNumber, amount, description);
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
-		verify(mockBankAccountDAO, times(2)).save(argument.capture());
+		verify(mockBankAccountDAO, times(1)).update(argument.capture());
 
 		assertEquals(amount, argument.getValue().getBalance(), 0.01);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
@@ -121,7 +121,7 @@ public class BankAccountTest extends TestCase {
 
 		BankAccount.withdraw(accountNumber, amount, description);
 		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor.forClass(BankAccountDTO.class);
-		verify(mockBankAccountDAO, times(2)).save(argument.capture());
+		verify(mockBankAccountDAO, times(1)).update(argument.capture());
 
 		assertEquals(-amount, argument.getValue().getBalance(), 0.01);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
@@ -187,4 +187,5 @@ public class BankAccountTest extends TestCase {
 		assertTrue(openAccount.getValue().getTimeStamp() != null);
 		assertEquals(timeStamp, openAccount.getValue().getTimeStamp());
 	}
+
 }

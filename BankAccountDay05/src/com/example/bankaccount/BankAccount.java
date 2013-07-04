@@ -38,7 +38,7 @@ public class BankAccount {
 		BankAccountDTO accountDTO = bankAccountDAO.get(accountNumber);
 		accountDTO.setBalance(accountDTO.getBalance() + amount);
 		accountDTO.setDescription(description);
-		bankAccountDAO.save(accountDTO);
+		bankAccountDAO.update(accountDTO);
 		Long timestamp = calendar.getTimeInMillis();
 		Transaction.doTransaction(accountNumber, timestamp, amount, description);
 	}
@@ -47,7 +47,7 @@ public class BankAccount {
 		BankAccountDTO accountDTO = bankAccountDAO.get(accountNumber);
 		accountDTO.setBalance(accountDTO.getBalance() - amount);
 		accountDTO.setDescription(description);
-		bankAccountDAO.save(accountDTO);
+		bankAccountDAO.update(accountDTO);
 		Long timestamp = calendar.getTimeInMillis();
 		Transaction.doTransaction(accountNumber, timestamp, -amount, description);
 	}
