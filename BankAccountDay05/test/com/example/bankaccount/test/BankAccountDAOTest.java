@@ -51,16 +51,22 @@ public class BankAccountDAOTest extends AndroidTestCase {
 	}
 
 	public void testUpdateBankAccount() {
+		//add new
 		String accountNumber = "0123456789";
 		bankaccountDAO.save(createBankAccount(accountNumber));
+		
+		//get to update
 		BankAccountDTO bankAccount = bankaccountDAO.get(accountNumber);
-
+		
+		//update new value
 		int amount = 500;
 		Long timeStamp = System.currentTimeMillis();
 		bankAccount.setBalance(bankAccount.getBalance() + amount);
 		bankAccount.setTimeStamp(timeStamp);
 		long result = bankaccountDAO.update(bankAccount);
 
+		//get after update to compare
+		bankAccount = bankaccountDAO.get(accountNumber);
 		assertEquals(1, result);
 		assertEquals(amount, bankAccount.getBalance(), 0.01);
 		assertEquals(timeStamp, bankAccount.getTimeStamp());

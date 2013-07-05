@@ -3,6 +3,8 @@
  */
 package com.example.bankaccount.test;
 
+import java.util.List;
+
 import android.test.AndroidTestCase;
 
 import com.example.bankaccount.TransactionDAO;
@@ -30,6 +32,18 @@ public class TransactionDAOTest extends AndroidTestCase {
 		TransactionDTO transaction = createNewTransaction(accountNumber, timestamp, amount, description);
 		long result = transactionDAO.save(transaction);
 		assertEquals(1, result);
+	}
+
+	public void testGetTransactionsByAccountNumber() {
+		String accountNumber = "0123456789";
+		int amount = 500;
+		String description = "Deposit";
+		Long timestamp = System.currentTimeMillis();
+		TransactionDTO transaction = createNewTransaction(accountNumber, timestamp, amount, description);
+		transactionDAO.save(transaction);
+		List<TransactionDTO> list = transactionDAO.get(accountNumber);
+		assertTrue(list != null);
+		assertTrue(list.size() == 1);
 	}
 
 	private TransactionDTO createNewTransaction(String accountNumber, Long timestamp, int amount, String description) {
