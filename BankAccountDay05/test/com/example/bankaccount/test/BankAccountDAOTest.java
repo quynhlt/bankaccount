@@ -22,9 +22,9 @@ public class BankAccountDAOTest extends AndroidTestCase {
 		bankaccountDAO = new BankAccountDAO(getContext(), null);
 	}
 
-	public void testSaveNewAccount() {
+	public void testInsertNewAccount() {
 		BankAccountDTO bankAccount = createBankAccount("0123456789");
-		long result = bankaccountDAO.save(bankAccount);
+		long result = bankaccountDAO.insert(bankAccount);
 		assertEquals(1, result);
 		assertEquals(1, bankaccountDAO.getRecordSize());
 	}
@@ -32,40 +32,40 @@ public class BankAccountDAOTest extends AndroidTestCase {
 	public void testGetBankAccountByAccountNumber() {
 		String accountNumber = "0123456789";
 		BankAccountDTO bankAccount = createBankAccount(accountNumber);
-		bankaccountDAO.save(bankAccount);
+		bankaccountDAO.insert(bankAccount);
 		BankAccountDTO bankAccountActual = bankaccountDAO.get(accountNumber);
 		assertTrue(null != bankAccountActual);
 	}
 
-	public void testSaveNewAccountDuplicateAccountNumber() throws Exception {
+	public void testInsertNewAccountDuplicateAccountNumber() throws Exception {
 		String accountNumber = "0123456789";
 		BankAccountDTO bankAccount = createBankAccount(accountNumber);
-		bankaccountDAO.save(bankAccount);
+		bankaccountDAO.insert(bankAccount);
 		bankAccount = bankaccountDAO.get(accountNumber);
 		boolean existed = bankAccount == null ? true : false;
 		if (existed) {
 			bankAccount = createBankAccount(accountNumber);
-			bankaccountDAO.save(bankAccount);
+			bankaccountDAO.insert(bankAccount);
 		}
 		assertEquals(1, bankaccountDAO.getRecordSize());
 	}
 
 	public void testUpdateBankAccount() {
-		//add new
+		// add new
 		String accountNumber = "0123456789";
-		bankaccountDAO.save(createBankAccount(accountNumber));
-		
-		//get to update
+		bankaccountDAO.insert(createBankAccount(accountNumber));
+
+		// get to update
 		BankAccountDTO bankAccount = bankaccountDAO.get(accountNumber);
-		
-		//update new value
+
+		// update new value
 		int amount = 500;
 		Long timeStamp = System.currentTimeMillis();
 		bankAccount.setBalance(bankAccount.getBalance() + amount);
 		bankAccount.setTimeStamp(timeStamp);
 		long result = bankaccountDAO.update(bankAccount);
 
-		//get after update to compare
+		// get after update to compare
 		bankAccount = bankaccountDAO.get(accountNumber);
 		assertEquals(1, result);
 		assertEquals(amount, bankAccount.getBalance(), 0.01);

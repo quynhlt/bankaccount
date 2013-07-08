@@ -23,7 +23,7 @@ public class Transaction {
 		transaction.setTimestamp(timestamp);
 		transaction.setAmount(amount);
 		transaction.setDescription(description);
-		transactionDAO.save(transaction);
+		transactionDAO.insert(transaction);
 	}
 
 	public static List<TransactionDTO> getTransactions(String accountNumber) {

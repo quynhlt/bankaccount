@@ -3,9 +3,6 @@
  */
 package com.example.bankaccount;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,7 +20,7 @@ public class BankAccountDAO {
 		this.db = openHelper.getWritableDatabase();
 	}
 
-	public long save(BankAccountDTO bankAccountDTO) {
+	public long insert(BankAccountDTO bankAccountDTO) {
 		ContentValues values = new ContentValues();
 		values.put(DBHelper.ACCOUNT_NUMBER, bankAccountDTO.getAccountNumber());
 		values.put(DBHelper.BALANCE, bankAccountDTO.getBalance());
@@ -40,13 +37,9 @@ public class BankAccountDAO {
 	}
 
 	public int getRecordSize() {
-		List<String> results = new ArrayList<String>();
-		Cursor query = db.query(DBHelper.TABLE_ACCOUNT, null, null, null, null, null, null);
-		while (query.moveToNext()) {
-			results.add(query.getString(query.getColumnIndexOrThrow(DBHelper.ACCOUNT_NUMBER)));
-		}
-		query.close();
-		return results.size();
+		String countQuery = "SELECT  * FROM " + DBHelper.TABLE_ACCOUNT;
+		Cursor cursor = db.rawQuery(countQuery, null);
+		return cursor.getCount();
 	}
 
 	public BankAccountDTO get(String accountNumber) {

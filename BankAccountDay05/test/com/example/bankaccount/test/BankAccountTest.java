@@ -52,7 +52,7 @@ public class BankAccountTest extends TestCase {
 		BankAccount.openAccount(accountNumber);
 
 		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
-		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
+		verify(mockBankAccountDAO, times(1)).insert(openAccount.capture());
 
 		assertEquals(accountNumber, openAccount.getValue().getAccountNumber());
 		assertEquals(0.0, openAccount.getValue().getBalance(), 0.01);
@@ -103,7 +103,7 @@ public class BankAccountTest extends TestCase {
 
 		BankAccount.deposit(accountNumber, amount, description);
 		ArgumentCaptor<TransactionDTO> argument = ArgumentCaptor.forClass(TransactionDTO.class);
-		verify(mockTransactionDAO, times(1)).save(argument.capture());
+		verify(mockTransactionDAO, times(1)).insert(argument.capture());
 
 		assertEquals(amount, argument.getValue().getAmount(), 0.01);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
@@ -141,7 +141,7 @@ public class BankAccountTest extends TestCase {
 
 		BankAccount.withdraw(accountNumber, amount, description);
 		ArgumentCaptor<TransactionDTO> argument = ArgumentCaptor.forClass(TransactionDTO.class);
-		verify(mockTransactionDAO, times(1)).save(argument.capture());
+		verify(mockTransactionDAO, times(1)).insert(argument.capture());
 
 		assertEquals(-amount, argument.getValue().getAmount(), 0.01);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
@@ -183,7 +183,7 @@ public class BankAccountTest extends TestCase {
 		Long timeStamp = System.currentTimeMillis();
 		when(mockCalendar.getTimeInMillis()).thenReturn(timeStamp);
 		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor.forClass(BankAccountDTO.class);
-		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
+		verify(mockBankAccountDAO, times(1)).insert(openAccount.capture());
 		assertTrue(openAccount.getValue().getTimeStamp() != null);
 		assertEquals(timeStamp, openAccount.getValue().getTimeStamp());
 	}
