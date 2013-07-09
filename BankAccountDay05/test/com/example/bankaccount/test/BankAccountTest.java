@@ -28,6 +28,7 @@ import com.example.bankaccount.TransactionDTO;
  */
 
 public class BankAccountTest extends TestCase {
+	
 	private BankAccountDAO mockBankAccountDAO;
 	private TransactionDAO mockTransactionDAO;
 	private Calendar mockCalendar;
@@ -45,7 +46,6 @@ public class BankAccountTest extends TestCase {
 	}
 
 	// step 1
-
 	public void testOpenAccountHasZeroBalanceAndPersistent() {
 
 		String accountNumber = "0123456789";

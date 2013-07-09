@@ -72,7 +72,6 @@ public class TransactionDAOTest extends AndroidTestCase {
 			TransactionDTO transaction = createNewTransaction(accountNumber, System.currentTimeMillis(), amount + i, description + i);
 			transactionDAO.insert(transaction);
 		}
-
 		int numberRecord = 2;
 		List<TransactionDTO> list = transactionDAO.get(accountNumber, numberRecord);
 		assertTrue(list != null);

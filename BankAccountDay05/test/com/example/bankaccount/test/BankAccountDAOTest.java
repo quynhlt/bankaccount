@@ -41,12 +41,11 @@ public class BankAccountDAOTest extends AndroidTestCase {
 		String accountNumber = "0123456789";
 		BankAccountDTO bankAccount = createBankAccount(accountNumber);
 		bankaccountDAO.insert(bankAccount);
-		bankAccount = bankaccountDAO.get(accountNumber);
-		boolean existed = bankAccount == null ? true : false;
-		if (existed) {
-			bankAccount = createBankAccount(accountNumber);
-			bankaccountDAO.insert(bankAccount);
-		}
+		
+		//insert Duplicate Account Number
+		bankAccount = createBankAccount(accountNumber);
+		bankaccountDAO.insert(bankAccount);
+		
 		assertEquals(1, bankaccountDAO.getRecordSize());
 	}
 

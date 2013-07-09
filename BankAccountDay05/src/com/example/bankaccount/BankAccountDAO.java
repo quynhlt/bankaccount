@@ -21,11 +21,17 @@ public class BankAccountDAO {
 	}
 
 	public long insert(BankAccountDTO bankAccountDTO) {
-		ContentValues values = new ContentValues();
-		values.put(DBHelper.ACCOUNT_NUMBER, bankAccountDTO.getAccountNumber());
-		values.put(DBHelper.BALANCE, bankAccountDTO.getBalance());
-		values.put(DBHelper.OPEN_TIME_STAMP, bankAccountDTO.getTimeStamp());
-		return db.insert(DBHelper.TABLE_ACCOUNT, null, values);
+		long result = 0;
+		BankAccountDTO bankAccount = get(bankAccountDTO.getAccountNumber());
+		boolean notExisted = bankAccount == null ? true : false;
+		if (notExisted) {
+			ContentValues values = new ContentValues();
+			values.put(DBHelper.ACCOUNT_NUMBER, bankAccountDTO.getAccountNumber());
+			values.put(DBHelper.BALANCE, bankAccountDTO.getBalance());
+			values.put(DBHelper.OPEN_TIME_STAMP, bankAccountDTO.getTimeStamp());
+			result = db.insert(DBHelper.TABLE_ACCOUNT, null, values);
+		}
+		return result;
 	}
 
 	public long update(BankAccountDTO bankAccountDTO) {
